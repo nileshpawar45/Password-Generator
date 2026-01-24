@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Password Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <h2>Password Generator</h2>
+
+    <label>Password Length</label>
+    <input type="number" id="length" value="5">
+
+    <div class="options">
+        <label><input type="checkbox" id="lower"> Lowercase Letters</label>
+        <label><input type="checkbox" id="upper"> Uppercase Letters</label>
+        <label><input type="checkbox" id="numbers"> Numbers</label>
+        <label><input type="checkbox" id="symbols"> Symbols</label>
+    </div>
+
+    <button onclick="generate()">Generate Password</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+function generate() {
+    const length = document.getElementById("length").value;
+    const lower = document.getElementById("lower").checked;
+    const upper = document.getElementById("upper").checked;
+    const numbers = document.getElementById("numbers").checked;
+    const symbols = document.getElementById("symbols").checked;
+
+    fetch(`/password/generate?length=${length}&lower=${lower}&upper=${upper}&numbers=${numbers}&symbols=${symbols}`)
+        .then(res => res.text())
+        .then(data => {
+            document.getElementById("result").innerText =
+                "Generated Password: " + data;
+        });
+}
+</script>
+
+</body>
+</html>
